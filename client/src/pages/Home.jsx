@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
 import { Loader, Card, FormField } from "../components";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const Home = () => {
   const [loading, setLoading] = useState(false);
@@ -25,7 +26,7 @@ const Home = () => {
     const fetchPosts = async () => {
       setLoading(true);
       try {
-        const response = await fetch("http://localhost:8080/api/v1/post", {
+        const response = await fetch(`${API_URL}/api/v1/post`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",

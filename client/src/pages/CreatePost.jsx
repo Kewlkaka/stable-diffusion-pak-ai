@@ -5,6 +5,8 @@ import { preview } from "../assets";
 import { getRandomPrompt } from "../utils";
 import { FormField, Loader } from "../components";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const CreatePost = () => {
   const navigate = useNavigate(); //allow renavigation back to the home page
 
@@ -20,16 +22,13 @@ const CreatePost = () => {
     if (form.prompt) {
       setGeneratingImg(true);
       try {
-        const response = await fetch(
-          "http://localhost:8080/api/v1/stablediffusion",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ prompt: form.prompt }),
-          }
-        );
+        const response = await fetch(`${API_URL}/api/v1/stablediffusion`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ prompt: form.prompt }),
+        });
 
         if (response.ok) {
           const data = await response.json();
@@ -54,7 +53,7 @@ const CreatePost = () => {
     if (form.prompt && form.photo) {
       setLoading(true);
       try {
-        const response = await fetch("http://localhost:8080/api/v1/post", {
+        const response = await fetch(`${API_URL}/api/v1/post`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
